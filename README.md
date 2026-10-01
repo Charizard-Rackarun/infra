@@ -19,8 +19,7 @@ Siga as etapas abaixo no seu terminal para baixar o projeto, configurar o ambien
 Baixe o código-fonte do repositório `infra` e acesse a pasta raiz do projeto:
 
 ```bash
-git clone [https://github.com/seu-usuario/infra.git](https://github.com/seu-usuario/infra.git)
-cd infra
+https://github.com/Charizard-Rackarun/infra.git
 ```
 
 *(Substitua `seu-usuario` pelo nome do usuário ou organização proprietária do repositório no GitHub).*
@@ -61,6 +60,8 @@ docker compose up -d --build
 Caso o banco de dados precise ser inicializado ou atualizado pela primeira vez, execute as migrações dentro do container do backend:
 
 ```bash
+docker compose exec backend alembic revision --autogenerate -m "Atualiza a versão do banco"
+
 docker compose exec backend alembic upgrade head
 ```
 
