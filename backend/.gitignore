@@ -1,52 +1,47 @@
-# Ambiente virtual
-.venv/
-venv/
-env/
-
-# Variáveis de ambiente e segredos
-.env
-.env.*
-!.env.example
-
-# Python
+# Python / FastAPI
 __pycache__/
 *.py[cod]
+*$py.class
 *.so
-*.egg-info/
-.eggs/
+.Python
 build/
+develop-eggs/
 dist/
-pip-wheel-metadata/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Ambiente Virtual
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Banco de dados local e migrações geradas localmente que não devem subir (opcional)
+*.sqlite3
+*.db
+
+# Variáveis de ambiente
+.env
+.env.local
 
 # Testes e cobertura
 .pytest_cache/
 .coverage
-.coverage.*
 htmlcov/
-coverage.xml
-
-# Linters e type checkers
-.ruff_cache/
-.mypy_cache/
-
-# Banco de dados local e volumes
-*.sqlite3
-*.db
-pgdata/
+.tox/
 
 # Logs
 *.log
-
-# Uploads e planilhas locais (importações de teste)
-uploads/
-*.xlsx
-*.xls
-
-# IDEs e editores
-.vscode/
-.idea/
-*.swp
-
-# Sistema operacional
-.DS_Store
-Thumbs.db
