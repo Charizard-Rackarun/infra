@@ -1,6 +1,4 @@
-# Infra - Hospital Vida Plena
 
-Repositório de infraestrutura e orquestração da aplicação **Hospital Vida Plena**, contendo os serviços de **Backend** (Python com Alembic) e **Frontend** (Next.js/React), totalmente conteinerizados com Docker.
 
 ## 📋 Pré-requisitos
 
