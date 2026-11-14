@@ -1,132 +1,162 @@
 
+# 🚀 VitrineIA — Plataforma de Inteligência Comercial e Engajamento
 
-## 📋 Pré-requisitos
+<p align="left">
+  <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-blue" alt="Status">
+  <img src="https://img.shields.io/badge/Docker-Enabled-2496ED?logo=docker&logoColor=white" alt="Docker">
+  <img src="https://img.shields.io/badge/FastAPI-0.9+-005571?logo=fastapi&logoColor=white" alt="FastAPI">
+  <img src="https://img.shields.io/badge/Next.js-15-black?logo=next.js&logoColor=white" alt="Next.js">
+</p>
 
-Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
+Plataforma centralizada de inteligência comercial e engajamento de lojistas voltada para centros de compras, integrada com painéis gerenciais, questionários dinâmicos e automação baseada em Inteligência Artificial.
+
+---
+
+## 🛠️ Pré-requisitos do Sistema
+
+Antes de iniciar a configuração do ambiente, certifique-se de possuir as seguintes ferramentas instaladas em sua máquina:
 
 * **Git** (`git --version`)
 * **Docker** (`docker --version`)
 * **Docker Compose** (`docker compose version`)
 
-> *Nota: Se estiver utilizando Windows ou macOS, recomenda-se a instalação do **Docker Desktop**. No Linux (Ubuntu/Debian), certifique-se de que o serviço do Docker está ativo (`sudo systemctl start docker`) e que seu usuário tem permissão para executá-lo sem `sudo`.*
+> **Nota para Linux (Ubuntu/Debian):** Certifique-se de que o daemon do Docker está ativo (`sudo systemctl start docker`) e que seu usuário possui permissões para executá-lo sem o prefixo `sudo`.
 
-## 🚀 Passo a Passo para Instalação e Execução
+---
 
-Siga as etapas abaixo no seu terminal para baixar o projeto, configurar o ambiente e subir os containers:
+## ⚙️ Configuração e Instalação do Ambiente
 
-### 1. Clonar o repositório
+Siga o passo a passo abaixo para clonar, configurar e executar a aplicação completa via Docker Compose.
 
-Baixe o código-fonte do repositório `infra` e acesse a pasta raiz do projeto:
+### 1. Clonar o Repositório
+Abra o seu terminal, clone o repositório oficial e navegue até a pasta raiz:
 
 ```bash
-https://github.com/Charizard-Rackarun/infra.git
+git clone https://github.com/Charizard-Rackarun/infra.git
+cd infra
+
 ```
 
-*(Substitua `seu-usuario` pelo nome do usuário ou organização proprietária do repositório no GitHub).*
+### 2. Configurar as Variáveis de Ambiente (`.env`)
 
-### 2. Configurar as variáveis de ambiente (`.env`)
+O projeto disponibiliza arquivos de modelo para as variáveis de ambiente do microsserviço de backend e frontend. Duplique-os e renomeie-os conforme o seu ambiente operacional:
 
-O projeto possui arquivos de exemplo de configuração tanto para o **backend** quanto para o **frontend**. Crie os arquivos `.env` reais a partir dos modelos:
-
-**No Linux / macOS / Git Bash:**
-
+* **Linux / macOS / Git Bash:**
 ```bash
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
+
 ```
 
-**No Windows (PowerShell / CMD):**
 
+* **Windows (PowerShell):**
 ```powershell
 copy backend\.env.example backend\.env
 copy frontend\.env.example frontend\.env
+
 ```
 
-> **Importante:** Abra os arquivos `backend/.env` e `frontend/.env` e preencha as credenciais necessárias (como URL do banco de dados, chaves secretas e URLs da API) antes de subir os containers.
 
-### 3. Construir e subir os containers com Docker Compose
 
-Na pasta raiz do projeto (`infra/`), execute o comando abaixo para construir as imagens e iniciar todos os serviços em segundo plano:
+> ⚠️ **Importante:** Revise os arquivos `backend/.env` e `frontend/.env` recém-criados e ajuste chaves secretas, portas ou strings de conexão conforme necessário antes de prosseguir.
+
+### 3. Build e Execução dos Containers
+
+Na pasta raiz do projeto, execute o comando do Docker Compose para compilar as imagens e inicializar os serviços em segundo plano (*detached mode*):
 
 ```bash
 docker compose up -d --build
+
 ```
 
-* O parâmetro `--build` garante que as imagens do `backend` e `frontend` sejam construídas com as dependências mais recentes.
-* O parâmetro `-d` (*detached mode*) roda os containers em segundo plano, liberando o seu terminal.
+* `--build`: Assegura a recompilação limpa das imagens do frontend e backend utilizando as dependências mais recentes.
+* `-d`: Mantém os containers executando em segundo plano, liberando o terminal.
 
-### 4. Executar as migrações do banco de dados (Alembic)
+### 4. Execução das Migrações do Banco de Dados (Alembic)
 
-Caso o banco de dados precise ser inicializado ou atualizado pela primeira vez, execute as migrações dentro do container do backend:
+Com os containers em execução, aplique as migrações estruturais do banco de dados relacional via ORM (Alembic) para garantir que todas as tabelas e colunas estejam criadas:
 
 ```bash
-docker compose exec backend alembic revision --autogenerate -m "Atualiza a versão do banco"
-
+docker compose exec backend alembic revision --autogenerate -m "Atualiza o banco"
 docker compose exec backend alembic upgrade head
+
 ```
 
-### 5. Acessar a aplicação
+---
 
-Após os containers estarem rodando, você poderá acessar os serviços nos seguintes endços locais (verifique as portas exatas no seu `docker-compose.yml`):
+## 🌐 Endpoints e Acessos da Aplicação
 
-* **Frontend (Aplicação Web):** `http://localhost:3000`
-* **Backend (API / Documentação Swagger):** `http://localhost:8000/docs`
+Após a inicialização bem-sucedida, os serviços estarão acessíveis nas seguintes portas locais:
 
-## 🛠️ Comandos Úteis do Docker
+| Serviço | URL de Acesso | Descrição |
+| --- | --- | --- |
+| **Frontend (Aplicação Web)** | `http://localhost:3000` | Interface do usuário e painel lojista |
+| **Backend (API / Documentação)** | `http://localhost:8000/docs` | Documentação interativa (Swagger UI) |
 
-Gerencie o ciclo de vida dos containers utilizando os comandos abaixo na raiz do projeto:
+---
 
-* **Verificar o status dos containers em execução:**
-  
+## 📦 Comandos Úteis para Gestão (Docker)
+
+Gerencie o ciclo de vida da infraestrutura utilizando os comandos abaixo na raiz do projeto:
+
+* **Verificar o status dos containers:**
 ```bash
-  docker compose ps
-  
+docker compose ps
+
 ```
 
-* **Visualizar os logs em tempo real (todos os serviços):**
-  
+
+* **Monitorar logs em tempo real (todos os serviços):**
 ```bash
-  docker compose logs -f
-  
+docker compose logs -f
+
 ```
 
-* **Visualizar logs de um serviço específico (ex: `backend` ou `frontend`):**
-  
+
+* **Monitorar logs de um serviço específico:**
 ```bash
-  docker compose logs -f backend
-  
+docker compose logs -f backend
+# ou
+docker compose logs -f frontend
+
 ```
 
-* **Parar os containers sem remover os dados:**
-  
+
+* **Parar os containers de forma segura:**
 ```bash
-  docker compose stop
-  
+docker compose stop
+
 ```
 
-* **Parar e remover os containers e redes criados:**
-  
+
+* **Parar e remover os containers e redes criadas:**
 ```bash
-  docker compose down
-```
-  *(Adicione `-v` ao final — `docker compose down -v` — caso deseje apagar também os volumes/dados do banco).*
+docker compose down
 
-## 📂 Estrutura do Repositório
+```
+
+
+*(Dica: Adicione a flag `-v` — `docker compose down -v` — caso deseje limpar completamente os volumes e resetar o banco de dados).*
+
+---
+
+## 📂 Arquitetura do Repositório
 
 ```text
 infra/
-├── backend/                 # Código-fonte da API, Alembic e Dockerfile do Backend
-│   ├── alembic/             # Migrações de banco de dados
-│   ├── app/                 # Lógica da aplicação
-│   ├── .env.example         # Modelo de variáveis de ambiente do Backend
-│   ├── Dockerfile           # Instruções de build da imagem do Backend
-│   └── requirements.txt     # Dependências Python
-├── frontend/                # Código-fonte Next.js e Dockerfile do Frontend
-│   ├── src/                 # Páginas, componentes e hooks
-│   ├── .env.example         # Modelo de variáveis de ambiente do Frontend
-│   ├── Dockerfile           # Instruções de build da imagem do Frontend
-│   └── package.json         # Dependências Node.js
-├── .gitignore               # Arquivos ignorados pelo Git (.env, .venv, node_modules)
-├── docker-compose.yml       # Orquestração dos serviços (Backend, Frontend, Banco)
-└── README.md                # Documentação do projeto
+├── backend/                 # Microsserviço API (Python / FastAPI / Alembic)
+│   ├── alembic/             # Histórico de migrações do banco de dados
+│   ├── app/                 # Regras de negócios, rotas e modelos ORM
+│   ├── .env.example         # Template de variáveis de ambiente do backend
+│   ├── Dockerfile           # Configuração de containerização do backend
+│   └── requirements.txt     # Dependências do ecosistema Python
+├── frontend/                # Aplicação Client-Side (Next.js 15 / TypeScript)
+│   ├── src/                 # Páginas, componentes estruturais e hooks
+│   ├── .env.example         # Template de variáveis de ambiente do frontend
+│   ├── Dockerfile           # Configuração de containerização do frontend
+│   └── package.json         # Dependências do ecossistema Node.js
+├── .gitignore               # Arquivos e diretórios ignorados pelo controle de versão
+├── docker-compose.yml       # Orquestração de containers (DB PostgreSQL, API, Web)
+└── README.md                # Documentação técnica do projeto
+
 ```
