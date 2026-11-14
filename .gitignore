@@ -1,7 +1,18 @@
-node_modules/
-.next/
-__pycache__/
+# Ambientes virtuais e OS
 .venv/
-dist/
-build/
+env/
+venv/
+*.pyc
+__pycache__/
+.DS_Store
+Thumbs.db
+
+# Configurações locais e chaves
 .env
+*.pem
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
