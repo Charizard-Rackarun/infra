@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: db_charizard
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 'TheCharizard54#$'
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - rede-sistema
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sistema-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:TheCharizard54%23%24@db:5432/postgres
+      - SECRET_KEY=ASDHUEOSDF_CHARIZARD
+      - CORS_ORIGINS=["http://localhost:3000"]
+    depends_on:
+      - db
+    networks:
+      - rede-sistema
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sistema-frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - rede-sistema
+
+volumes:
+  pgdata:
+
+networks:
+  rede-sistema:
+    driver: bridge
