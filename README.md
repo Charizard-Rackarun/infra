@@ -108,7 +108,6 @@ Gerencie o ciclo de vida dos containers utilizando os comandos abaixo na raiz do
   
 ```bash
   docker compose down
-  
 ```
   *(Adicione `-v` ao final — `docker compose down -v` — caso deseje apagar também os volumes/dados do banco).*
 
